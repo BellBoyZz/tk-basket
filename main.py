@@ -70,6 +70,7 @@ class Basket(Sprite):
 
         self.app = app
         self.direction = None
+        self.fruit_eaten_observers = []
 
     def update(self):
         if self.direction == BASKET_LEFT:
@@ -94,6 +95,12 @@ class BasketGame(GameApp):
         self.score = 0
         self.score_text = Text(self, 'Score: 0', 100, 40)
         self.fruits = []
+
+        self.basket.fruit_eaten_observers.append(lambda: self.fruit_keeping_by_basket())
+
+    def fruit_keeping_by_basket(self):
+        self.score += 1
+        self.update_score()
 
     def update_score(self):
         self.score_text.set_text('Score: ' + str(self.score))
